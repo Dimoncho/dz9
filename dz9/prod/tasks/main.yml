@@ -1,0 +1,14 @@
+---
+# tasks file for prod
+- name: setup programms
+  apt: name={{item}} state=installed
+  with_items:
+    - default-jdk
+    - tomcat8
+
+- name: Copy result of maven build into Tomkat8 working directory
+  copy:
+   src: /tmp/fetched/hello-1.0.war
+   dest: /var/lib/tomcat8/webapps
+  notify:
+   - restart tomcat8

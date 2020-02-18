@@ -1,0 +1,24 @@
+---
+# tasks file for build
+- name: setup programms
+  apt: name={{item}} state=installed
+  with_items:
+    - default-jdk
+    - maven
+    - git
+
+- name: Clone git
+  git:
+   repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
+   dest: /tmp/1
+
+- name: maven build
+  shell: mvn package
+  args:
+   chdir: /tmp/1
+
+- name: get result of maven build
+  fetch:
+   src: /tmp/1/target/hello-1.0.war
+   dest: /tmp/fetched/
+   flat: yes

@@ -1,0 +1,14 @@
+---
+- name: build maven artifact
+  hosts: build
+  become: yes
+
+  roles: 
+   - build
+
+- name: production
+  hosts: prod
+  become: yes
+
+  roles:
+   - prod
